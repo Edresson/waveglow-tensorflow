@@ -25,14 +25,36 @@ def norm(ifn, ofn_mel, ofn_wav):
     y = wav2msp(y)
     np.save(ofn_mel, y)
 
-def wav2msp(x):
+'''def wav2msp(x):
     ret = librosa.stft(x, n_fft=args.n_fft, hop_length=args.hop_length, win_length=args.window_size)
     ret = np.abs(ret)
     ret = np.matmul(args.melbasis, ret)
     ret = -20 * np.log10(np.maximum(ret, 1e-8))
     ret = (ret - args.ref_db) / args.scale_db
     ret = np.clip(ret, -args.clip_to_value, args.clip_to_value)
-    return ret.transpose()
+    return ret.transpose()'''
+def wav2msp(y):
+    # Preemphasis
+    y = np.append(y[0], y[1:] - hp.preemphasis * y[:-1])
+ 
+    # stft
+    linear = librosa.stft(y=y,n_fft=args.n_fft,hop_length=args.hop_length, win_length=args.window_size)
+
+    # magnitude spectrogram
+    mag = np.abs(linear)  # (1+n_fft//2, T)
+
+    # mel spectrogram
+    mel = np.dot(args.melbasis, mag)  # (n_mels, t)
+
+    # to decibel
+    mel = 20 * np.log10(np.maximum(1e-5, mel))
+
+    # normalize
+    mel = np.clip((mel - hp.ref_db + hp.max_db) / hp.max_db, 1e-8, 1)
+
+    # Transpose
+    mel = mel.T.astype(np.float32)  # (T, n_mels)
+    return mel
 
 def clean_dir(d):
     for f in os.listdir(d):

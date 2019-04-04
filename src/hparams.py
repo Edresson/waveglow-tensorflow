@@ -50,16 +50,16 @@ parser.add_argument('--summary_dir', dest='summary_dir', default='../summary', h
 
 ##Audio Processing Params##
 #STFT
-parser.add_argument('--num_freq', dest='num_freq', type=int, default=513, help='Number of frequency bins for STFT')
-parser.add_argument('--hop_length', dest='hop_length', type=int, default=256, help='Hop length for STFT')
-parser.add_argument('--window_size', dest='window_size', type=int, default=1024, help='Window size for STFT')
+parser.add_argument('--num_freq', dest='num_freq', type=int, default=1025, help='Number of frequency bins for STFT')
+parser.add_argument('--hop_length', dest='hop_length', type=int, default=276, help='Hop length for STFT')
+parser.add_argument('--window_size', dest='window_size', type=int, default=1102, help='Window size for STFT')
 #Mels
 parser.add_argument('--n_mel', dest='n_mel', type=int, default=80, help='Channel Size of Inputs')
 parser.add_argument('--fmin', dest='fmin', type=int, default=0, help='Minimum Frequency of Mel Banks')
 parser.add_argument('--fmax', dest='fmax', type=int, default=7600, help='Maximum Frequency of Mel Banks')
 #Silence
-parser.add_argument('--trim_hop_length', dest='trim_hop_length', type=int, default=256, help='Hop length for trimming silence')
-parser.add_argument('--trim_window_size', dest='trim_window_size', type=int, default=1024, help='Window size for trimming silence')
+parser.add_argument('--trim_hop_length', dest='trim_hop_length', type=int, default=276, help='Hop length for trimming silence')
+parser.add_argument('--trim_window_size', dest='trim_window_size', type=int, default=1102, help='Window size for trimming silence')
 parser.add_argument('--trim_inner_scilence', dest='trim_inner_scilence', default=False, action='store_true', help='Specify to trim the inner slience')
 #Preprocessing
 parser.add_argument('--sample_rate', dest='sample_rate', type=int, default=22050, help='Sample Rate of Input Audios')
@@ -87,7 +87,7 @@ args = parser.parse_args()
 ##The model Structure Hyperparams, NOT CHANGEABLE from command line##
 ##Params dependent of other params##
 args.n_fft = (args.num_freq - 1) * 2
-args.melbasis = librosa.filters.mel(args.sample_rate, args.n_fft, n_mels=args.n_mel, fmin=args.fmin, fmax=args.fmax)
+args.melbasis = librosa.filters.mel(args.sample_rate, args.n_fft, n_mels=args.n_mel)
 args.step_per_mel = args.hop_length
 args.wav_time_step = args.mel_time_step * args.step_per_mel
 if args.n_flows % args.early_output_every == 0:
