@@ -37,10 +37,10 @@ parser.add_argument('--truncate_sample', dest='truncate_sample', default=False, 
 parser.add_argument('--truncate_step', dest='truncate_step', type=float, default=384, help='Truncate the infer input mels to truncate_step due to GPU memory consideration')
 
 ##Input Path##
-parser.add_argument('--metadata_dir', dest='metadata_dir', default='/LJSpeech-1.1/metadata.csv', help='Path to metadata.csv')
-parser.add_argument('--dataset_dir', dest='dataset_dir', default='/LJSpeech-1.1/wavs', help='Path to audio file for preprocessing dataset')
-parser.add_argument('--mel_dir', dest='mel_dir', default='/waveglow/training_mels', help='Path to input mel spectrogram (Output directory for processing dataset)')
-parser.add_argument('--wav_dir', dest='wav_dir', default='/waveglow/training_wavs', help='Path to input audio file for training (Output directory for processing dataset)')
+parser.add_argument('--metadata_dir', dest='metadata_dir', default='../TTS-Portuguese-Corpus/texts,.csv', help='Path to metadata.csv')
+parser.add_argument('--dataset_dir', dest='dataset_dir', default='../TTS-Portuguese-Corpus/', help='Path to audio file for preprocessing dataset')
+parser.add_argument('--mel_dir', dest='mel_dir', default='waveglow/training_mels', help='Path to input mel spectrogram (Output directory for processing dataset)')
+parser.add_argument('--wav_dir', dest='wav_dir', default='waveglow/training_wavs', help='Path to input audio file for training (Output directory for processing dataset)')
 
 ##Output Path##
 parser.add_argument('--saving_path', dest='saving_path', default='../model', help='Path to save model if specified')

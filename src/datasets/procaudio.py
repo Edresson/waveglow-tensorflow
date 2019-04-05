@@ -76,8 +76,8 @@ def process_one_dir():
     with open(args.metadata_dir, 'r') as f:
         lines = f.readlines()
     for line in tqdm(lines):
-        wavname, _, text = line.strip().split('|')
-        wavpath = os.path.join(args.dataset_dir, wavname) + '.wav'
+        wavname, text = line.strip().split('==')
+        wavpath = os.path.join(args.dataset_dir, wavname)
         ofn_mel = os.path.join(args.mel_dir, wavname)
         ofn_wav = os.path.join(args.wav_dir, wavname)
         try:
